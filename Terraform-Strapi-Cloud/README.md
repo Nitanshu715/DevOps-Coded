@@ -34,22 +34,6 @@ User → Internet → AWS VPC → EC2 Instance → Strapi Server (Port 1337)
 | Networking | Elastic IP |
 | SSH | PEM Key generated via Terraform |
 
----
-
-Terraform-Strapi-Cloud/
-│
-├── main.tf
-├── variables.tf
-├── outputs.tf
-├── providers.tf
-├── modules/
-│   └── ec2/
-│       ├── main.tf
-│       ├── variables.tf
-│       └── outputs.tf
-│
-└── README.md
-
 
 ---
 
