@@ -36,8 +36,6 @@ User → Internet → AWS VPC → EC2 Instance → Strapi Server (Port 1337)
 
 ---
 
-## 📂 Project Structure
-
 Terraform-Strapi-Cloud/
 │
 ├── main.tf
@@ -48,9 +46,10 @@ Terraform-Strapi-Cloud/
 │   └── ec2/
 │       ├── main.tf
 │       ├── variables.tf
-│       ├── outputs.tf
+│       └── outputs.tf
 │
 └── README.md
+
 
 ---
 
