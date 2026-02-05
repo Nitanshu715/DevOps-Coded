@@ -1,129 +1,146 @@
-# 🚀 Terraform AWS EC2 Strapi Deployment
+# 🌍 Terraform Private EC2 Strapi Infrastructure
 
-## 📌 Project Overview
-This project demonstrates a full Infrastructure as Code (IaC) workflow using Terraform to provision cloud infrastructure on AWS and deploy a production-ready Strapi headless CMS application on an EC2 instance.
-
-The project covers:
-- Modular Terraform architecture
-- Automated SSH key generation
-- Secure EC2 provisioning
-- Security group configuration
-- Public networking setup
-- Node.js environment configuration
-- Strapi deployment and runtime setup
+A production-style Infrastructure as Code (IaC) project deploying a secure, scalable AWS architecture using Terraform. This project provisions a private EC2 instance running Strapi CMS inside Docker, exposed securely through an Application Load Balancer, with full VPC networking and NAT configuration.
 
 ---
 
-## 🧱 Architecture
+## 🏗️ Architecture Overview
 
-User → Internet → AWS VPC → EC2 Instance → Strapi Server (Port 1337)
+This project follows real-world cloud architecture best practices:
 
----
-
-## ⚙️ Tech Stack
-
-| Layer | Technology |
-|------|------------|
-| Infrastructure | Terraform |
-| Cloud Provider | AWS |
-| Compute | EC2 |
-| OS | Amazon Linux 2023 |
-| Runtime | Node.js v20 |
-| Application | Strapi v5 |
-| Security | AWS Security Groups |
-| Networking | Elastic IP |
-| SSH | PEM Key generated via Terraform |
-
+User → Application Load Balancer (Public Subnets) → Private EC2 (Docker + Strapi) → NAT Gateway → Internet
 
 ---
 
 ## 🔐 Security Design
 
-- SSH access limited to port 22
-- Application access allowed only on port 1337
-- Private key generated securely via TLS provider
-- Key stored locally with 0400 permission
+- EC2 instance is deployed in a **private subnet**
+- Only Load Balancer can reach the application
+- SSH access restricted to a single IP using Security Groups
+- No public IP attached to the EC2 instance
+- Outbound internet access enabled via NAT Gateway
 
 ---
 
-## 🏗 Terraform Module Responsibilities
+## ☁️ AWS Services Used
 
-### EC2 Module
-- Generates RSA SSH key pair
-- Creates AWS key pair resource
-- Creates security group
-- Provisions EC2 instance
-- Outputs public IP
+- Amazon VPC
+- Public & Private Subnets
+- Internet Gateway
+- NAT Gateway
+- Route Tables
+- Security Groups
+- EC2 Instance
+- Application Load Balancer
+- Target Groups & Listeners
+
+---
+
+## 🐳 Application Layer
+
+The EC2 instance bootstraps automatically using `user_data`:
+
+- Installs Docker
+- Pulls Strapi Docker image
+- Runs Strapi container on port 1337
+
+---
+
+## 📂 Project Structure
+
+provider.tf — AWS provider configuration  
+variables.tf — Input variables  
+terraform.tfvars — Environment values  
+main.tf — Core infrastructure code  
+outputs.tf — Output values (Load Balancer DNS)  
+user_data.sh — EC2 bootstrap script  
 
 ---
 
 ## 🚀 Deployment Steps
 
-### 1️⃣ Initialize Terraform
+```bash
 terraform init
-
-### 2️⃣ Review Plan
-terraform plan
-
-### 3️⃣ Apply Infrastructure
 terraform apply
+```
+
+After deployment:
+
+```bash
+app_url = <load-balancer-dns>
+```
+
+Access Strapi Admin Panel via browser.
 
 ---
 
-## 🌍 Accessing the Server
+## ⚙️ Infrastructure Components
 
-ssh -i strapi-key.pem ec2-user@<PUBLIC_IP>
+### VPC
+Custom CIDR block with DNS support enabled.
 
----
+### Subnets
+- Public Subnets (Multi-AZ for Load Balancer)
+- Private Subnet (Application Server)
 
-## 🟢 Install Node.js
+### Routing
+Public route table routes to Internet Gateway.  
+Private route table routes to NAT Gateway.
 
-sudo yum update -y
-curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
-sudo yum install nodejs -y
+### Security Groups
+ALB SG allows HTTP from internet.  
+EC2 SG allows traffic only from ALB + SSH from user IP.
 
----
+### EC2 Instance
+Runs Strapi inside Docker. Private-only access.
 
-## 🚀 Deploy Strapi
-
-npx create-strapi-app@latest my-strapi --quickstart
-
----
-
-## 🌐 Access Admin Panel
-
-http://<PUBLIC_IP>:1337/admin
-
----
-
-## 📊 Infrastructure Outputs
-
-| Output | Description |
-|--------|-------------|
-| public_ip | EC2 public address |
-| instance_id | Instance identifier |
+### Load Balancer
+Provides public entry point and forwards traffic to EC2.
 
 ---
 
-## 🧠 Key Learnings
+## 📈 Why This Architecture?
 
-- Infrastructure automation using Terraform modules
-- Secure cloud networking principles
-- Handling memory constraints in small instances
-- Node.js runtime management
-- Production deployment troubleshooting
-
----
-
-## 🔮 Future Improvements
-
-- Use remote backend (S3 + DynamoDB)
-- Add Nginx reverse proxy
-- Configure SSL with Let's Encrypt
-- Add CI/CD pipeline
+- Follows zero-trust network principles
+- Separates public and private resources
+- Production-grade networking setup
+- Infrastructure fully reproducible via code
 
 ---
 
-## 👨‍💻 Author
-Cloud & DevOps Project — Infrastructure Automation and Application Deployment
+## 🎯 Learning Outcomes
+
+- VPC Design
+- Network Segmentation
+- NAT vs Internet Gateway
+- Load Balancer configuration
+- Terraform IaC workflows
+- Secure cloud architecture
+
+---
+
+## 🧠 Key Terraform Concepts Used
+
+- Resources
+- Variables
+- Outputs
+- File provisioning
+- Dependency management
+- Infrastructure lifecycle
+
+---
+
+## 🔄 Future Enhancements
+
+- HTTPS with ACM
+- Auto Scaling Group
+- RDS Database backend
+- Domain + Route53
+- CI/CD Pipeline
+
+---
+
+## 📜 License
+
+Educational DevOps Project.
 
