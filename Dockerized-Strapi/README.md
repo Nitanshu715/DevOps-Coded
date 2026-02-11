@@ -19,20 +19,6 @@ The application is built using Strapi (Headless CMS) and containerized using Doc
 - Ensure production-ready configuration
 - Maintain clean repository structure
 
----
-
-## 🏗️ Project Structure
-
-Dockerized-Strapi/
-├── config/
-├── public/
-├── src/
-├── .dockerignore
-├── Dockerfile
-├── package.json
-├── package-lock.json
-├── README.md
-└── screenshots/
 
 ---
 
