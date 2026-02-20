@@ -1,207 +1,253 @@
 
-# 🚀 DevOps-Coded  
-## 🌐 Cloud Engineering & Infrastructure Automation Portfolio
+# ⚡ DevOps-Coded
+## 🚀 Cloud Infrastructure • Container Engineering • Secure Deployments
+
+<div align="center">
+
+![AWS](https://img.shields.io/badge/AWS-Cloud%20Architecture-FF9900?style=for-the-badge&logo=amazonaws)
+![Terraform](https://img.shields.io/badge/IaC-Terraform-623CE4?style=for-the-badge&logo=terraform)
+![Docker](https://img.shields.io/badge/Container-Docker-2496ED?style=for-the-badge&logo=docker)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?style=for-the-badge&logo=postgresql)
+![DevOps](https://img.shields.io/badge/Practice-DevOps-0A66C2?style=for-the-badge)
+
+</div>
 
 ---
 
-## ✨ Overview
+## 🌌 About This Repository
 
-DevOps-Coded represents a structured cloud engineering portfolio focused on real-world infrastructure design, secure deployment strategies, containerization, and Infrastructure-as-Code practices.
+**DevOps-Coded** is a cloud-native engineering portfolio designed around real-world infrastructure design, containerization strategy, and secure deployment architecture.
 
-This repository is not a collection of isolated implementations — it reflects a progressive engineering journey demonstrating:
+This repository demonstrates the evolution of backend deployment from local development environments to fully provisioned, reproducible, and secure AWS infrastructure using Infrastructure as Code principles.
 
-- Secure AWS infrastructure provisioning
-- Containerized backend deployments
-- Database integration with Amazon RDS PostgreSQL
-- Infrastructure automation using Terraform
-- Deterministic container image versioning
-- Production-oriented cloud networking architecture
-
-Every implementation emphasizes reproducibility, security boundaries, modular design, and scalable deployment patterns.
+It reflects applied engineering — not theoretical configuration.
 
 ---
 
-## 🏗 Architectural Philosophy
+## 🧠 Engineering Vision
 
-The systems implemented across this repository follow modern cloud-native engineering principles:
+The implementations across this repository are built around the following principles:
 
-- Infrastructure as Code (IaC)
-- Immutable container builds
-- Git-based versioned deployments
-- IAM least-privilege access
-- Secure VPC networking boundaries
-- Reproducible cloud environments
-- Environment-driven configuration management
+- Infrastructure as Code (Terraform-driven)
+- Immutable container artifacts
+- Version-controlled deployments
+- Deterministic Docker image tagging
+- Secure VPC-based architecture
+- IAM least-privilege enforcement
+- Database isolation within private network boundaries
+- Reproducible, automated infrastructure provisioning
 
 ---
 
-## ☁️ Core Cloud Capabilities Demonstrated
+## 🏗 Cloud Architecture Model
 
-### AWS Infrastructure Engineering
+```
+Developer
+   ↓
+Git Commit
+   ↓
+Docker Build
+   ↓
+Versioned Image (Git SHA)
+   ↓
+Amazon ECR
+   ↓
+Provisioned AWS Infrastructure (Terraform)
+   ↓
+EC2 Instance (Docker Runtime)
+   ↓
+Secure Amazon RDS PostgreSQL (Private Subnet)
+```
 
-- EC2 provisioning with user-data bootstrapping
+---
+
+## ☁️ AWS Infrastructure Capabilities
+
+### Networking Architecture
+
 - Custom VPC configuration
-- Public & private subnet architecture
-- Route tables & Internet Gateway configuration
-- Security group-based isolation
+- Public and private subnet segmentation
+- Internet Gateway and route table configuration
+- Security group isolation
+- Controlled inbound/outbound traffic rules
+- Database layer isolation within VPC
+
+### Compute Layer
+
+- EC2 provisioning via Terraform
+- Automated bootstrapping using user data scripts
+- IAM instance profile attachment
+- Role-based ECR access (no static credentials)
+
+### Database Layer
+
+- Amazon RDS PostgreSQL
+- SSL-enforced connections
+- No public database access
+- Security group-restricted access from compute layer
+- Managed storage and automated backups
+
+---
+
+## 🐳 Container Engineering Strategy
+
+### Docker Design Approach
+
+- Optimized Node.js base images
+- Production dependency installation
+- Clean layer caching strategy
+- Environment-driven configuration
+- Minimal attack surface container build
+
+### Versioning Strategy
+
+Each deployment image is tagged using Git commit SHA:
+
+```
+git rev-parse --short HEAD
+docker tag app-image <ECR_URI>:<COMMIT_SHA>
+docker push <ECR_URI>:<COMMIT_SHA>
+```
+
+This enables:
+
+- Deterministic deployments
+- Immutable production artifacts
+- Traceable rollback capability
+- Deployment reproducibility
+
+---
+
+## 🏗 Infrastructure as Code (Terraform)
+
+The infrastructure layer is provisioned using modular Terraform configurations.
+
+Core components include:
+
+- VPC definitions
+- Subnet allocation
+- Security groups
 - IAM roles and instance profiles
-- Amazon RDS PostgreSQL deployment
-- Secure database connectivity inside VPC
-- SSL-enforced database communication
+- EC2 provisioning
+- RDS provisioning
+- Networking dependencies
 
----
+### Execution Flow
 
-### 🐳 Containerization & Application Engineering
-
-- Production-ready Dockerfile design
-- Multi-environment configuration handling
-- Lightweight container images
-- Deterministic image tagging
-- Git commit SHA-based versioning strategy
-- Amazon ECR integration
-- Automated container startup workflows
-
----
-
-### 🛢 Database Integration
-
-- Migration from local SQLite to managed PostgreSQL
-- Secure RDS configuration
-- Encrypted database connectivity
-- Restricted inbound database rules (no public exposure)
-- Proper environment variable injection for secrets
-
----
-
-### 🏗 Infrastructure Automation (Terraform)
-
-- Modular Terraform architecture
-- Reusable configuration patterns
-- Parameterized deployments
-- Automated provisioning of compute, networking, IAM, and database resources
-
-Initialization:
+```
 terraform init
-
-Planning:
 terraform plan
-
-Deployment:
 terraform apply
+```
+
+Terraform ensures environment consistency across deployments and eliminates manual provisioning errors.
 
 ---
 
-### 🔄 Deployment Workflow Strategy
+## 🔐 Security Architecture
 
-Code Change  
-↓  
-Git Commit  
-↓  
-Docker Build  
-↓  
-Image Tag (Git SHA)  
-↓  
-Push to ECR  
-↓  
-Infrastructure Provisioning via Terraform  
-↓  
-EC2 Pulls Image  
-↓  
-Container Bootstraps Automatically  
-↓  
-Secure RDS Connection Established  
+Security is treated as a foundational requirement, not an afterthought.
 
----
+### Security Controls Implemented
 
-## 🔐 Security Architecture Principles
-
+- No database exposure to 0.0.0.0/0
+- EC2-to-RDS restricted communication
+- IAM least privilege enforcement
+- SSL-required database connections
+- Secrets managed via environment configuration
 - No hardcoded credentials
-- IAM role-based ECR access
-- No public database exposure
-- Security group–restricted database connectivity
-- SSL enforced for PostgreSQL
-- Least privilege access model
+- Role-based ECR access
 
 ---
 
-## 📂 Repository Structure
+## 📦 Repository Structure
 
+```
 DevOps-Coded/
+│
+├── AWS-EC2-Terraform/
+├── Containerized-Deployment-EC2/
+├── Dockerized-Strapi/
+├── RDS-PostgreSQL-Integration/
+├── Strapi-Cloud/
+├── Strapi-ECS-Fargate-CI-CD/
+├── Terraform-Strapi-Cloud/
+├── Terraform-Strapi-Infra/
+│
+└── README.md
+```
 
-├── AWS-EC2-Terraform/  
-├── Containerized-Deployment-EC2/  
-├── Dockerized-Strapi/  
-├── RDS-PostgreSQL-Integration/  
-├── Strapi-Cloud/  
-├── Strapi-ECS-Fargate-CI-CD/  
-├── Terraform-Strapi-Cloud/  
-├── Terraform-Strapi-Infra/  
-└── README.md  
-
-Each directory focuses on a specific domain of cloud engineering while contributing to a cohesive DevOps progression.
-
----
-
-## 📈 Engineering Challenges Addressed
-
-- Docker daemon permission conflicts  
-- Amazon ECR authentication handling  
-- RDS SSL enforcement errors  
-- Security group misconfiguration debugging  
-- IAM role misbinding issues  
-- Terraform state troubleshooting  
-- Cross-platform development conflicts  
-
-These debugging experiences strengthened production-readiness and cloud troubleshooting skills.
+Each directory represents a focused engineering layer contributing to the overall cloud deployment maturity.
 
 ---
 
-## 🚀 Deployment Maturity Achieved
+## 📈 Engineering Progression
 
-The repository reflects progression from:
+The repository reflects a clear growth curve:
 
-Local development  
-→ Containerized deployment  
-→ Cloud-hosted EC2 deployment  
-→ Secure RDS integration  
-→ Infrastructure as Code automation  
-→ Version-controlled container deployments  
-→ Production-oriented architecture design  
+Local Application Execution  
+→ Dockerized Application  
+→ EC2-based Cloud Deployment  
+→ Secure RDS Integration  
+→ Infrastructure as Code Automation  
+→ Deterministic Image Versioning  
+→ Production-Ready Secure Architecture  
 
 ---
 
-## 🧠 Engineering Competencies Demonstrated
+## 🧩 Real-World Challenges Addressed
 
-Cloud Networking  
+- Docker permission conflicts
+- ECR authentication workflows
+- RDS SSL enforcement errors
+- pg_hba.conf encryption enforcement issues
+- Security group misconfiguration debugging
+- IAM role misbinding
+- Terraform state management conflicts
+- Cloud networking troubleshooting
+
+These debugging scenarios strengthened practical production engineering capability.
+
+---
+
+## ⚙️ DevOps Competencies Demonstrated
+
+Cloud Networking Architecture  
 IAM Security Design  
-Containerization  
+Containerization Strategy  
 Infrastructure as Code  
-Database Integration  
-Versioned Deployment Strategy  
-Secure Architecture  
-DevOps Automation  
+Secure Database Integration  
+Deployment Versioning  
+Production Debugging  
+System Isolation & Boundary Design  
+Cloud Automation Workflows  
 
 ---
 
-## 🔮 Future Enhancements
+## 🔮 Future Architecture Evolution
 
-- Advanced CI/CD pipelines
+- Full CI/CD pipeline automation
 - Load balancer integration
-- HTTPS with reverse proxy
-- ECS-based orchestration
+- HTTPS reverse proxy
+- ECS-based container orchestration
 - Secrets Manager integration
-- Monitoring & alerting implementation
 - Blue-Green deployment strategies
+- CloudWatch monitoring and alerting
+- Horizontal scaling design
 
 ---
 
-## 🏁 Conclusion
+## 🏁 Closing Statement
 
-DevOps-Coded reflects applied cloud engineering practices focused on secure, reproducible, and production-aligned infrastructure systems.
+DevOps-Coded represents hands-on cloud engineering execution built around secure, reproducible, and production-aligned infrastructure systems.
 
-This repository demonstrates hands-on DevOps capability beyond theoretical understanding and showcases practical experience in designing, automating, securing, and debugging real cloud-native deployments.
+This repository demonstrates applied DevOps capability through real infrastructure design, secure container deployments, database isolation, and automation-first architecture.
 
 ---
 
-Built with Cloud-Native Engineering Principles
+<div align="center">
+
+Engineered with Cloud-Native Discipline
+
+</div>
 
