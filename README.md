@@ -1,6 +1,6 @@
 <p align="center">
-  <h1 align="center"> # ⚡ DevOps-Coded </h1>
-  <h3 align="center">## 🚀 Cloud Infrastructure • Container Engineering • Secure Deployments</h3>
+  <h1 align="center"> ⚡ DevOps-Coded </h1>
+  <h3 align="center">🚀 Cloud Infrastructure • Container Engineering • Secure Deployments</h3>
   <p align="center">
   </p>
 </p>
